@@ -20,10 +20,10 @@ images:
     service: app
     source: ghcr.io/usagi-org/ai-goofish
     channel: custom
-    sort: position
+    sort: semver
     tag_regex: ^latest$
     version_regex: ^latest$
-    version_template: "1.0.0"
+    version_template: "{version}"
     delivery:
       mode: mirror
       require_digest_match: true
