@@ -1,0 +1,49 @@
+application:
+  subdomain: goofish
+  multi_instance: false
+  # 自带 Web 登录（WEB_USERNAME/WEB_PASSWORD 注入随机值），无自助注册（wiki-go 判例反向：有登录但可注入）。
+  # 账号可注入且无自助注册页 → 不加 public_path，由平台入口鉴权兜底。
+  upstreams:
+    - location: /
+      backend: http://app:8000/
+services:
+  app:
+    # upstream: ghcr.io/usagi-org/ai-goofish:latest（上游仅 latest/hash 标签，无语义版本）
+    image: ghcr.1ms.run/usagi-org/ai-goofish:latest
+    environment:
+      - SERVER_PORT=8000
+      - WEB_USERNAME=admin
+      - WEB_PASSWORD={{PASSWORD_gf_pw}}
+      - RUN_HEADLESS=true
+      - PCURL_TO_MOBILE=true
+      - APP_DATABASE_FILE=/app/data/app.sqlite3
+    binds:
+      - /lzcapp/var/data:/app/data
+      - /lzcapp/var/state:/app/state
+      - /lzcapp/var/jsonl:/app/jsonl
+      - /lzcapp/var/logs:/app/logs
+      - /lzcapp/var/images:/app/images
+      - /lzcapp/var/price_history:/app/price_history
+      - /lzcapp/pkg/content/config.json:/app/config.json
+      - /lzcapp/pkg/content/prompts:/app/prompts
+    init: true
+    stop_grace_period: 30s
+usage: |
+  闲鱼监控是一个 AI 驱动的闲鱼商品监控工具：配置监控任务后，系统会定时或
+  实时抓取闲鱼搜索结果，用 AI 分析商品描述与图片，命中条件时推送通知。
+
+  首次使用：
+    - 打开应用入口，用户名 admin，密码在部署参数里（随机生成）。
+    - 在网页里编辑监控任务（关键词、价格区间、地区、AI 提示词）。
+    - 在 .env 层面的 AI 配置（OPENAI_API_KEY 等）需要自行提供：
+      支持 OpenAI 兼容接口的任意模型（需支持图片分析）。
+
+  重要说明：
+    - 抓取闲鱼需要你自己的闲鱼登录 Cookie（浏览器登录后从开发者工具
+      导出，粘贴到任务配置里）。Cookie 会过期，需要定期更新。
+    - 本项目仅供学习研究使用（上游 DISCLAIMER 明示）。请遵守所在地区
+      法律法规与平台服务条款，勿用于任何违法用途。
+    - AI 分析需要自备 API Key，推送通知（ntfy/PushPlus/Bark/TG）可选配置。
+    - 数据（任务、图片、价格历史、日志）全部本地持久化。
+    - 上游镜像仅提供 latest 标签（无语义化版本），应用版本号取包内版本。
+    - 未做实机验证。

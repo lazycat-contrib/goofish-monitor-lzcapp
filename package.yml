@@ -1,0 +1,18 @@
+package: community.lazycat.app.goofish-monitor
+name: 闲鱼监控
+description: "AI 驱动的闲鱼商品监控：多任务实时/定时监控，AI 智能分析商品描述与图片，支持多渠道推送通知。"
+version: 1.0.0
+min_os_version: "1.5.0"
+homepage: https://github.com/Usagi-org/ai-goofish-monitor
+author: dingyufei615 and contributors
+license: MIT
+permissions:
+  required:
+    - net.internet
+locales:
+  zh:
+    name: 闲鱼监控
+    description: AI 驱动的闲鱼商品监控：多任务实时/定时监控，AI 智能分析商品描述与图片，支持多渠道推送通知。
+  en:
+    name: Goofish Monitor
+    description: AI-powered Goofish (Xianyu) product monitoring with real-time and scheduled tasks, AI analysis and push notifications.

@@ -1,0 +1,13 @@
+params:
+  - id: gf_pw
+    type: secret
+    name: Web 登录密码
+    description: "Web 管理界面密码（用户名固定 admin）。默认随机生成。"
+    default_value: "$random(len=16)"
+    optional: false
+
+locales:
+  zh:
+    gf_pw:
+      name: Web 登录密码
+      description: Web 管理界面登录密码，用户名固定为 admin。默认随机生成。
