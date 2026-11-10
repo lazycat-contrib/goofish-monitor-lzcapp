@@ -22,8 +22,8 @@ images:
     channel: custom
     sort: semver
     tag_regex: ^latest$
-    version_regex: ^latest$
-    version_template: "{version}"
+    version_regex: ^(?P<version>latest)$
+    version_template: "1.0.0"
     delivery:
       mode: mirror
       require_digest_match: true
